@@ -1,3 +1,163 @@
+🔗 Canlı Demo Linki   
+https://baihvh6z3srni6cmuruicv.streamlit.app/   
+   
+GITHUB REPOSITORY LINK - https://github.com/IanMiriti/eng   
+ Additional DEMO future Website : https://property-art.lovable.app/   
+  
+  
+    
+AI SPARK HACKATHON – YATIRIM DANIŞMANI PROJESİ   
+Takım: Engineers   
+Tema: Yapay Zekâ Modelleri   
+    
+1.	Problem Yorumlama (10 Puan)   
+Bizden istenen problem neydi?   
+Hackathon kapsamında bizden, İstanbul konut piyasasına yönelik veri odaklı bir Yatırım Danışmanı sistemi geliştirmemiz istendi. Amaç yalnızca konut fiyatı tahmin etmek değil, adil piyasa değerini (Fair Value) hesaplayarak bunu ilan fiyatı ile karşılaştırmak ve kullanıcıya yatırım kararı sunmaktı.   
+Problemi nasıl yorumladık?   
+Problemi şu şekilde tanımladık:   
+“Sabit gelirli ve kredi kullanabilen alıcıların, 2020 İstanbul konut piyasasında bir ilanın fırsat mı, normal mi yoksa pahalı mı olduğunu anlayabilmesini sağlayan karar destek sistemi geliştirmek.”   
+Uyum sağladığımız temel kısıtlar   
+•	Sadece 2020 verisi kullanıldı   
+•	Available for Loan = Yes filtresi zorunlu olarak uygulandı   
+•	Gelecek yıllara (2025 vb.) yönelik fiyat tahmini yapılmadı   
+  Ham bir regresyon problemi, gerçek hayata uygun bir  
+  
+2.	Veri Analizi – EDA (15 Puan)   
+EDA’nın amacı   
+•	Fiyat dağılımını anlamak   
+•	Aykırı değerleri incelemek   
+•	Metrekare (m²) etkisinin baskınlığını görmek   
+•	Konum, oda sayısı ve bina yaşının fiyat üzerindeki etkisini analiz etmek Elde edilen önemli içgörüler   
+•	Konut fiyatları sağa çarpık (right-skewed) bir dağılım göstermektedir   
+•	Ham veride m², fiyatı aşırı derecede domine etmektedir   
+•	Konum ve yapı özellikleri, toplam fiyattan çok metrekare başına değer üzerinden etkilidir   
+Görselleştirme   
+•	Krediye uygun konutlar filtrelendikten sonra fiyat dağılımı görselleştirildi   
+•	Modelin yanlış kitleyi öğrenmesi engellendi   
+  Sonuç:  EDA, doğrudan feature engineering stratejimizi şekillendirdi.   
+  
+3.	Veri Ön İşleme (15 Puan)   
+Temizleme işlemleri   
+•	Fiyat alanlarından TL , nokta ve virgüller kaldırıldı   
+•	Sayısal alanlar numerik tipe dönüştürüldü   
+•	Kritik kolonlarda (Price, Gross m², Net m²) eksik veriler çıkarıldı   
+Zorunlu filtreleme   
+•	Sadece krediye uygun (Available for Loan = Yes) konutlar kullanıldı   
+Özellik seçimi (Feature Selection)   
+•	Gürültü yaratan kolonlar çıkarıldı:   
+•	Neighborhood (aşırı detaylı)   
+•	İlan tarihleri (2020 modeli için anlamsız)   
+Özellik Mühendisliği (Yenilikçi Yaklaşım)   
+Tespit edilen problem   
+•	Model yalnızca m²’ye odaklanıyor, konum ve kaliteyi yeterince öğrenemiyordu   
+Geliştirdiğimiz çözüm   
+•	Target Encoding uygulandı   
+•	İlçe, oda sayısı ve bina yaşı için:   
+•	Ortalama fiyat   
+•	Metrekare başına ortalama fiyat (PPGSM)   
+Bu sayede model: - Bölgesel değerleri - Yapı kalitesini - Piyasa verimliliğini öğrenebildi   
+    
+4.	Model / Yöntem Seçimi (15 Puan)   
+Seçilen model: XGBoost Regressor Neden   
+XGBoost?   
+•	Tabular verilerde yüksek başarı   
+•	Doğrusal olmayan ilişkileri öğrenebilme   
+•	Çok sayıda özelliği etkin kullanabilme   
+•	Overfitting’e karşı dayanıklılık   
+Değerlendirilen alternatifler   
+•	Linear Regression  yetersiz   
+•	Random Forest  tuning maliyeti yüksek   
+Model yapılandırması   
+•	500 ağaç   
+•	Kontrollü derinlik   
+•	Düşük öğrenme oranı   
+    
+5.	Model Performansı (20 Puan)   
+Değerlendirme stratejisi   
+•	%80 eğitim – %20 test ayrımı   
+•	Kullanılan metrikler:   
+•	R² Skoru   
+•	RMSE (TL cinsinden hata)   
+Metriklerin önemi   
+•	R²  Piyasa dinamiklerinin ne kadar iyi öğrenildiğini gösterir   
+•	RMSE  Gerçek parasal hata miktarını ifade eder   
+Yorumlama   
+•	Yüksek R², güçlü öğrenme anlamına gelir   
+•	RMSE, ortalama konut fiyatına oranlanarak yorumlandı   
+Overfitting farkındalığı   
+•	Gizli test setine erişim yok   
+•	Hard-coded tahmin yok   
+  
+6.	Yenilikçilik (10 Puan)   
+Projemizi yenilikçi yapan noktalar   
+1.	Metrekare Verimliliği Yaklaşımı   
+2.	Tahmin değil karar üretme   
+3.	%10 toleranslı piyasa mantığı   
+ 
+4.	Yatırımcı dostu çıktı tasarımı   
+  Sonuç:  Klasik fiyat tahmininin ötesine geçildi.   
+  
+7.	Uygulanabilirlik (10 Puan)   
+Gerçek hayata uygunluk   
+•	Sabit gelirli alıcılar için tasarlandı   
+•	Kullanımı basit   
+•	Uzmanlık gerektirmez   
+Kullanım senaryoları   
+•	Ev alıcıları   
+•	Yatırımcılar   
+•	Emlak danışmanları   
+Ölçeklenebilirlik   
+•	Yeni verilerle yeniden eğitilebilir   
+ 
+•	Diğer şehirler için uyarlanabilir   
+  Sonuç:  Gerçek dünyada kullanılabilir bir çözüm.   
+  
+8.	Sunum & Anlatım (5 Puan)   
+Arayüz   
+•	Streamlit tabanlı sade tasarım   
+•	Tek tıkla analiz   
+Çıktılar   
+•	İlan fiyatı   
+•	Adil değer   
+•	Normal fiyat aralığı   
+•	Yatırım tavsiyesi   
+Demo hazır   
+•	Canlı link   
+•	Kurulum gerektirmez   
+    
+9.	Deployment & Sürekli Erişim (Referans)   
+Kullanılan platform Streamlit  Community Cloud Neden  
+önemli?   
+•	Colab geçicidir   
+•	Yarışma canlı demo ister   
+Deployment adımları   
+1.	Tüm dosyalar Colab’dan alındı   
+2.	GitHub reposuna yüklendi   
+3.	Streamlit Cloud’a bağlandı   
+4.	Otomatik kurulum ve yayın   
+Sonuç   
+•	7/24 erişilebilir   
+•	Kalıcı URL   
+    
+10.	Genel Değerlendirme   
+Bu proje: - Problemi doğru tanımlar - Güçlü veri bilimi yöntemleri kullanır - Yenilikçi bir bakış açısı sunar - Gerçek hayatta çalışır bir ürün ortaya koyar   
+Bu bir model değil, bir Yatırım Danışmanıdır.   
+    
+Teşekkürler 🙏   
+ADDITIONALLY  
+  
+🤖 Talk to AI Investment Advisor  
+Buyers can click the “Talk to AI Investment Advisor” button at the bottom of the  DEMO website to instantly access our AI model. The AI analyzes property details and compares the listing price with real market data to advise whether the home is an investment opportunity, fairly priced, or overpriced, helping buyers make confident, data-driven decisions before purchasing.  
+🔗  Website: https://property-art.lovable.app  
+🔗 AI Advisor: https://baihvh6z3srni6cmuruicv.streamlit.app/  
+  
+  
+
+
+
+
+
+
 # 🏡 AI-Powered Real Estate Investment Advisor
 
 **AI Spark Hackathon 2025**
